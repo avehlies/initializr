@@ -15,9 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -72,7 +69,14 @@ public class GenerateCommand implements Callable<Integer> {
 
     for (FileEntry fileEntry : fileEntries) {
       String dest = fileEntry.getDest();
-      dest = new java.io.File(".").getCanonicalPath() + "/" + outputDir + "/" + projectName + "/" + dest.replace("PACKAGE_NAME", packageGroup.replace(".", "/"));
+      dest =
+          new java.io.File(".").getCanonicalPath()
+              + "/"
+              + outputDir
+              + "/"
+              + projectName
+              + "/"
+              + dest.replace("PACKAGE_NAME", packageGroup.replace(".", "/"));
       fileEntry.setDest(dest);
       if (fileEntry.isDirectory()) {
         Files.createDirectories(Path.of(fileEntry.getDest()));
@@ -144,9 +148,9 @@ public class GenerateCommand implements Callable<Integer> {
                       .setSrc(path.relativize(p).toString())
                       .setDest(path.relativize(p).toString())
                       .setDirectory(Files.isDirectory(p));
-                      // .setRead(p.toFile().canRead())
-                      // .setWrite(p.toFile().canWrite())
-                      // .setExecute(p.toFile().canExecute());
+              // .setRead(p.toFile().canRead())
+              // .setWrite(p.toFile().canWrite())
+              // .setExecute(p.toFile().canExecute());
 
               if (!fileEntry.isDirectory()) {
                 try {
